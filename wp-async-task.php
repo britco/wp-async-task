@@ -132,15 +132,15 @@ if ( ! class_exists( 'WP_Async_Task' ) ) {
 					$cookies[] = "$name=" . urlencode( is_array( $value ) ? serialize( $value ) : $value );
 				}
 
-				$request_args = array(
+				$request_args = apply_filters( 'wp_async_task_request_args', array(
 					'timeout'   => 0.01,
 					'blocking'  => false,
 					'sslverify' => apply_filters( 'https_local_ssl_verify', true ),
 					'body'      => $this->_body_data,
-					'headers'   => array(
+					'headers'   => apply_filters( 'wp_async_task_request_headers', array(
 						'cookie' => implode( '; ', $cookies ),
-					),
-				);
+					) ),
+				) );
 
 				$url = admin_url( 'admin-post.php' );
 
